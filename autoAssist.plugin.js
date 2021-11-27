@@ -1,6 +1,7 @@
 /**
 * @name AutoAssist
 * @displayName AutoAssist
+* @source https://raw.githubusercontent.com/GR0SST/autoassist/main/autoAssist.plugin.js
 * @authorId 371336044022464523
 */
 /*@cc_on
@@ -39,8 +40,10 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "0.0.1",
+        version: "0.1.0",
         description: "Люблю сосать",
+        github: "https://github.com/GR0SST/autoassist/blob/main/autoAssist.plugin.js",
+        github_raw: "https://raw.githubusercontent.com/GR0SST/autoassist/main/autoAssist.plugin.js",
 
 
     },
@@ -48,7 +51,7 @@ const config = {
         title: "Channel logs",
         type: "fixed",
         items: [
-            "2"
+            "Ебать теперь нейросетка чекает чаты"
         ]
     }],
     defaultConfig: []
